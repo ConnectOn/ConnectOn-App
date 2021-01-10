@@ -33,7 +33,7 @@ class FlatListDemo extends Component {
         .post(SERVER_URL + '/login/', {
                 name: currentUser.user.name,
                 id: currentUser.user.id,
-                photo: currentUser.user.photo,
+                photo: ((currentUser.user.photo==null)?('https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?d=mp&f=y'):(currentUser.user.photo)),
         })
         .catch(function(error) {
                 console.log("Hell");

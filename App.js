@@ -4,15 +4,22 @@ import Room from'./src/Room'
 import Login from'./src/Login'
 import Register from'./src/Register'
 import RoomList from'./src/RoomList'
-import { createAppContainer, createSwitchNavigator } from "react-navigation"
+import { createAppContainer } from "react-navigation"
+import { createStackNavigator } from "react-navigation-stack"
 
-const AppSwitchNavigator = createSwitchNavigator({
-  Register: { screen: Register },
+const AppStackNavigator = createStackNavigator({
+  Register: { screen: Register, navigationOptions:{
+    headerShown: false
+  } },
   // Room: { screen: Room },
-  RoomList: { screen: RoomList },
-  Chat: { screen: Chat }
+  RoomList: { screen: RoomList, navigationOptions:{
+    headerShown: false
+  } },
+  Chat: { screen: Chat, navigationOptions:{
+    headerShown: false
+  } }
 });
 
-const App = createAppContainer(AppSwitchNavigator);
+const App = createAppContainer(AppStackNavigator);
 
 export default App;

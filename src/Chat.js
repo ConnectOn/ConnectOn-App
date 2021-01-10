@@ -15,24 +15,11 @@ const Chat = ({navigation}) =>  {
     fetch(url)
       .then((res) => res.json())
       .then((res) => {
-        console.log("R"+res);
-        setMessages(res);
+        setMessages(res.reverse());
       })
       .catch((error) => {
         console.log(error);
       });
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ])
     socket.on("chat message", msg => {
       setMessages([...messages, msg]);
     });
@@ -44,7 +31,7 @@ const Chat = ({navigation}) =>  {
     axios
         .post(SERVER_URL + '/chats', {
                 sender: sender.id,
-                receiver: receiver.id,
+                reciever: receiver.id,
                 messages: messages
         })
         .catch(function(error) {
@@ -62,7 +49,7 @@ const Chat = ({navigation}) =>  {
       messages={messages}
       onSend={messages => onSend(messages)}
       user={{
-        _id: 1,
+        _id: sender.id,
       }}
     />
   )
