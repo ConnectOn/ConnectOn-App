@@ -53,10 +53,10 @@ class FlatListDemo extends Component {
       .then((res) => {
         this.setState({
           data: res,
+          filterdata: res,
           error: res.error || null,
           loading: false,
         });
-        this.arrayholder = res.results;
       })
       .catch((error) => {
         this.setState({error, loading: false});
@@ -77,18 +77,19 @@ class FlatListDemo extends Component {
   };
 
   searchFilterFunction = (text) => {
+    console.log(text);
     this.setState({
       value: text,
     });
 
-    const newData = this.arrayholder.filter((item) => {
-      const itemData = `${item.name.title.toUpperCase()} ${item.name.first.toUpperCase()} ${item.name.last.toUpperCase()}`;
+    const newData = this.state.data.filter((item) => {
+      const itemData = `${item.name.toUpperCase()}`;
       const textData = text.toUpperCase();
 
       return itemData.indexOf(textData) > -1;
     });
     this.setState({
-      data: newData,
+      filterdata: newData,
     });
   };
 
@@ -117,7 +118,7 @@ class FlatListDemo extends Component {
     return (
       <View style={{flex: 1}}>
         <FlatList
-          data={this.state.data}
+          data={this.state.filterdata}
           renderItem={({item}) => (
             <ListItem onPress={() => {
               axios
