@@ -7,7 +7,7 @@ import {SERVER_URL} from '@env';
 
 const socket = io(SERVER_URL);
 
-const CreateRoom = ({navigation}) => {
+function CreateRoom({navigation}){
   const [text, setText] = useState('');
   const [user, setUser] = useState('');
 

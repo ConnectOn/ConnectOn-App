@@ -1,16 +1,19 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
+import { View, Header } from 'react-native';
 import io from 'socket.io-client'
 import axios from 'axios';
 import {SERVER_URL} from '@env';
 
-var socket = io(SERVER_URL);
+var socket;
 
 const Chat = ({navigation}) =>  {
   const [messages, setMessages] = useState([]);
   const sender=navigation.getParam('sender',null);
   const receiver=navigation.getParam('receiver',null);
   useEffect(() => {
+    console.log("Trying socket")
+    socket = io(SERVER_URL);
     const url=`${SERVER_URL}/chats/${sender.id}/${receiver.id}`;
     fetch(url)
       .then((res) => res.json())
@@ -27,7 +30,9 @@ const Chat = ({navigation}) =>  {
  
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-    socket.emit('newMessage', messages)
+    socket.emit("message", messages)
+    console.log("User send "+messages)
+    console.log(messages)
     axios
         .post(SERVER_URL + '/chats', {
                 sender: sender.id,
@@ -45,6 +50,12 @@ const Chat = ({navigation}) =>  {
   //   socket.on('send-chat-message', newMessages => { setMessages(newMessages) }); socket.emit('chat-message', newMessages); }
  
   return (
+    <View style={{flex: 1}}>
+      {/* <Header
+  leftComponent={{ icon: 'menu', color: '#fff' }}
+  centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+  rightComponent={{ icon: 'home', color: '#fff' }}
+/> */}
     <GiftedChat
       messages={messages}
       onSend={messages => onSend(messages)}
@@ -52,6 +63,7 @@ const Chat = ({navigation}) =>  {
         _id: sender.id,
       }}
     />
+    </View>
   )
 }
 export default Chat;
