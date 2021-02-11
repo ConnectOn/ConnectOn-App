@@ -23,7 +23,9 @@ const Chat = ({navigation}) =>  {
       .catch((error) => {
         console.log(error);
       });
-    socket.on("chat message", msg => {
+    socket.on("message", msg => {
+      console.log("getting data from backend")
+      console.log(msg)
       setMessages([...messages, msg]);
     });
   }, [])
