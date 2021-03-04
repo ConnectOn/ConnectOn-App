@@ -26,7 +26,7 @@ const Chat = ({navigation}) =>  {
     socket.on("message", msg => {
       console.log("getting data from backend")
       console.log(msg)
-      setMessages([...messages, msg]);
+      // setMessages([...messages, msg]);
     });
   }, [])
  
@@ -38,7 +38,7 @@ const Chat = ({navigation}) =>  {
     axios
         .post(SERVER_URL + '/chats', {
                 sender: sender.id,
-                reciever: receiver.id,
+                receiver: receiver.id,
                 messages: messages
         })
         .catch(function(error) {
